@@ -5,19 +5,24 @@ import org.springframework.stereotype.Service;
 import tech.com.employeemanager.exception.UserNotFoundException;
 import tech.com.employeemanager.model.Employee;
 import tech.com.employeemanager.repo.EmployeeRepository;
+import tech.com.employeemanager.EmployeeCrudService.CrudService;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
+
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class EmployeeService {
+
     private final EmployeeRepository employeeRepository;
+    private final CrudService employeeCrudService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, CrudService employeeCrudService) {
         this.employeeRepository = employeeRepository;
+        this.employeeCrudService = employeeCrudService;
     }
+
 
     public Employee addEmployee(Employee employee){
         employee.setEmployeeCode(UUID.randomUUID().toString());
@@ -26,6 +31,10 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployee(){
         return employeeRepository.findAll();
+    }
+
+    public List<String> findOnlyNames(){
+        return employeeCrudService.employeeOnlyName();
     }
 
     public Employee updateEmployee(Employee employee){

@@ -1,5 +1,6 @@
 package tech.com.employeemanager;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +20,19 @@ public class EmployeeResource {
         this.employeeService = employeeService;
     }
 
+
     //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all")
-    public ResponseEntity<List<Employee>> getAllEmployees(){
-        List<Employee> employees = employeeService.findAllEmployee();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+    public List<Employee> getAllEmployees(){
+        return employeeService.findAllEmployee();
+    }
+
+    @GetMapping("/allNames")
+    public List<String> getOnlyNames(){
+        List<String> employees = employeeService.findOnlyNames();
+
+        return employees;
+        //return new ResponseEntity<String>(String.valueOf(employees), HttpStatus.OK);
     }
 
     //@CrossOrigin(origins = "http://localhost:4200")
